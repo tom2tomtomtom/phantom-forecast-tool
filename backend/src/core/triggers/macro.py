@@ -7,7 +7,7 @@ Detects:
 - Sector rotation opportunities
 """
 
-from typing import List
+from typing import List, Optional
 from datetime import datetime
 
 from .base import BaseTrigger, TriggeredAsset, TriggerType
@@ -85,7 +85,7 @@ class MacroShiftTrigger(BaseTrigger):
 
         return triggered
 
-    def _detect_regime_change(self, macro: dict) -> str | None:
+    def _detect_regime_change(self, macro: dict) -> Optional[str]:
         """Detect if a monetary policy regime change is occurring."""
         fed_stance = macro.get("fed_stance", "neutral")
         fed_change = macro.get("fed_stance_change", False)
@@ -106,7 +106,7 @@ class MacroShiftTrigger(BaseTrigger):
 
         return None
 
-    def _detect_cycle_turn(self, macro: dict) -> str | None:
+    def _detect_cycle_turn(self, macro: dict) -> Optional[str]:
         """Detect if an economic cycle turn is occurring."""
         leading_indicators = macro.get("leading_indicators", "stable")
         yield_curve = macro.get("yield_curve", "normal")
@@ -127,7 +127,7 @@ class MacroShiftTrigger(BaseTrigger):
         data: dict,
         regime_change: str,
         macro: dict,
-    ) -> TriggeredAsset | None:
+    ) -> Optional[TriggeredAsset]:
         """Check if symbol benefits from the regime change."""
         sector = data.get("sector", "")
         rate_sensitivity = data.get("rate_sensitivity", "medium")
@@ -195,7 +195,7 @@ class MacroShiftTrigger(BaseTrigger):
         data: dict,
         cycle_turn: str,
         macro: dict,
-    ) -> TriggeredAsset | None:
+    ) -> Optional[TriggeredAsset]:
         """Check if symbol benefits from cycle turn."""
         sector = data.get("sector", "")
         beta = data.get("beta", 1.0)

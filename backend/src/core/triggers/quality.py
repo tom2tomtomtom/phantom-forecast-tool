@@ -7,7 +7,7 @@ Detects:
 - Margin expansion with revenue growth
 """
 
-from typing import List
+from typing import List, Optional
 from datetime import datetime
 
 from .base import BaseTrigger, TriggeredAsset, TriggerType
@@ -78,7 +78,7 @@ class QualityInflectionTrigger(BaseTrigger):
         self,
         symbol: str,
         data: dict,
-    ) -> TriggeredAsset | None:
+    ) -> Optional[TriggeredAsset]:
         """
         Check for sector crisis with company moat intact.
 
@@ -148,7 +148,7 @@ class QualityInflectionTrigger(BaseTrigger):
         self,
         symbol: str,
         data: dict,
-    ) -> TriggeredAsset | None:
+    ) -> Optional[TriggeredAsset]:
         """
         Check for signs of strengthening competitive advantage.
 

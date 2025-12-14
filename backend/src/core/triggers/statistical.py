@@ -7,7 +7,7 @@ Detects:
 - Short squeeze setups (high short interest + quality)
 """
 
-from typing import List
+from typing import List, Optional
 from datetime import datetime
 
 from .base import BaseTrigger, TriggeredAsset, TriggerType
@@ -80,7 +80,7 @@ class StatisticalAnomalyTrigger(BaseTrigger):
         self,
         symbol: str,
         data: dict,
-    ) -> TriggeredAsset | None:
+    ) -> Optional[TriggeredAsset]:
         """Check for massive price drop with stable fundamentals."""
         price_change = data.get("price_change_30d", 0)
         financials = data.get("financials")
@@ -117,7 +117,7 @@ class StatisticalAnomalyTrigger(BaseTrigger):
         self,
         symbol: str,
         data: dict,
-    ) -> TriggeredAsset | None:
+    ) -> Optional[TriggeredAsset]:
         """Check if current PE is far below historical average."""
         financials = data.get("financials")
         avg_pe_5yr = data.get("avg_pe_5yr")
@@ -153,7 +153,7 @@ class StatisticalAnomalyTrigger(BaseTrigger):
         self,
         symbol: str,
         data: dict,
-    ) -> TriggeredAsset | None:
+    ) -> Optional[TriggeredAsset]:
         """Check for high short interest with quality fundamentals."""
         short_interest = data.get("short_interest", 0)
         financials = data.get("financials")
