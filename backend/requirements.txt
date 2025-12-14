@@ -1,0 +1,22 @@
+# Phantom Forecast Tool - Backend Dependencies
+
+# Web Framework
+fastapi>=0.109.0
+uvicorn[standard]>=0.27.0
+
+# Database
+sqlalchemy>=2.0.0
+psycopg2-binary>=2.9.9
+
+# Configuration
+pydantic>=2.5.0
+pydantic-settings>=2.1.0
+
+# AI Services
+anthropic>=0.18.0
+
+# Supabase
+supabase>=2.3.0
+
+# HTTP Client
+httpx>=0.26.0
