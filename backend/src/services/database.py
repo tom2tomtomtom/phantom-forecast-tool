@@ -13,8 +13,8 @@ from sqlalchemy import create_engine, event
 from sqlalchemy.orm import Session, sessionmaker, declarative_base
 from sqlalchemy.pool import StaticPool
 
-# Get database URL from environment
-DATABASE_URL = os.environ.get("SUPABASE_DATABASE_URL", "sqlite:///./phantom_forecast.db")
+# Get database URL from environment (Railway uses DATABASE_URL)
+DATABASE_URL = os.environ.get("DATABASE_URL") or os.environ.get("SUPABASE_DATABASE_URL", "sqlite:///./phantom_forecast.db")
 DEBUG = os.environ.get("DEBUG", "false").lower() == "true"
 
 # Create database engine

@@ -23,8 +23,9 @@ class Settings(BaseSettings):
     host: str = "0.0.0.0"
     port: int = 8000
 
-    # Database (Supabase PostgreSQL)
-    supabase_database_url: str = "sqlite:///./phantom_forecast.db"
+    # Database (PostgreSQL)
+    database_url: str = "sqlite:///./phantom_forecast.db"
+    supabase_database_url: Optional[str] = None  # Legacy, use database_url
 
     # Supabase
     supabase_url: Optional[str] = None
@@ -42,7 +43,13 @@ class Settings(BaseSettings):
     finnhub_api_key: Optional[str] = None
 
     # CORS
-    cors_origins: List[str] = ["http://localhost:3000", "http://localhost:3003", "http://localhost:6100", "http://localhost:8080"]
+    cors_origins: List[str] = [
+        "http://localhost:3000",
+        "http://localhost:3003",
+        "http://localhost:6100",
+        "http://localhost:8080",
+        "https://frontend-production-ce8b.up.railway.app",
+    ]
     cors_allow_credentials: bool = True
     cors_allow_methods: List[str] = ["*"]
     cors_allow_headers: List[str] = ["*"]
