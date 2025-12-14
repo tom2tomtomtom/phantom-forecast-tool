@@ -190,6 +190,31 @@ class OpportunityService:
 
         return deleted
 
+    def delete_by_id(self, opportunity_id: str) -> bool:
+        """Delete a single opportunity by ID."""
+        opportunity = self.get_by_id(opportunity_id)
+        if not opportunity:
+            return False
+
+        self.db.delete(opportunity)
+        self.db.commit()
+        return True
+
+    def delete_by_scan_id(self, scan_id: str) -> int:
+        """Delete all opportunities from a specific scan."""
+        deleted = self.db.query(Opportunity).filter(
+            Opportunity.scan_id == scan_id
+        ).delete()
+
+        self.db.commit()
+        return deleted
+
+    def delete_all(self) -> int:
+        """Delete all opportunities."""
+        deleted = self.db.query(Opportunity).delete()
+        self.db.commit()
+        return deleted
+
     def get_stats(self, days: int = 30) -> dict:
         """Get opportunity statistics."""
         cutoff = datetime.utcnow() - timedelta(days=days)

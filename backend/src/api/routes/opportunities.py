@@ -161,6 +161,60 @@ async def cleanup_old_opportunities(
     }
 
 
+@router.delete("/all", response_model=dict)
+async def delete_all_opportunities(
+    db: Session = Depends(get_db)
+) -> dict:
+    """Delete all saved opportunities."""
+    service = OpportunityService(db)
+    deleted = service.delete_all()
+
+    return {
+        "success": True,
+        "deleted_count": deleted,
+        "message": f"Deleted all {deleted} opportunities"
+    }
+
+
+@router.delete("/scan/{scan_id}", response_model=dict)
+async def delete_scan(
+    scan_id: str,
+    db: Session = Depends(get_db)
+) -> dict:
+    """Delete all opportunities from a specific scan."""
+    service = OpportunityService(db)
+    deleted = service.delete_by_scan_id(scan_id)
+
+    if deleted == 0:
+        raise HTTPException(status_code=404, detail="Scan not found or already deleted")
+
+    return {
+        "success": True,
+        "scan_id": scan_id,
+        "deleted_count": deleted,
+        "message": f"Deleted {deleted} opportunities from scan"
+    }
+
+
+@router.delete("/{opportunity_id}", response_model=dict)
+async def delete_opportunity(
+    opportunity_id: str,
+    db: Session = Depends(get_db)
+) -> dict:
+    """Delete a single opportunity by ID."""
+    service = OpportunityService(db)
+    success = service.delete_by_id(opportunity_id)
+
+    if not success:
+        raise HTTPException(status_code=404, detail="Opportunity not found")
+
+    return {
+        "success": True,
+        "deleted_id": opportunity_id,
+        "message": "Opportunity deleted"
+    }
+
+
 @router.post("/update-prices", response_model=dict)
 async def update_opportunity_prices(
     days: int = Query(7, ge=1, le=30),
