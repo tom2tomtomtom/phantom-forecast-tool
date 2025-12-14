@@ -18,7 +18,7 @@ from fastapi.responses import JSONResponse
 
 from .config import get_settings
 from .services.database import init_db, close_db
-from .api.routes import phantom_router, quick_scan_router, opportunities_router
+from .api.routes import phantom_router, quick_scan_router, opportunities_router, triggers_router, jobs_router
 
 
 settings = get_settings()
@@ -92,6 +92,8 @@ async def internal_error_handler(request: Request, exc) -> JSONResponse:
 app.include_router(phantom_router, prefix="/api")
 app.include_router(quick_scan_router)  # Already has /api/scan prefix
 app.include_router(opportunities_router)  # Already has /api/opportunities prefix
+app.include_router(triggers_router)  # Already has /api/triggers prefix
+app.include_router(jobs_router)  # Already has /api/jobs prefix
 
 
 # Health endpoint

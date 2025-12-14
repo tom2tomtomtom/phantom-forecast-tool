@@ -20,3 +20,6 @@ supabase>=2.3.0
 
 # HTTP Client
 httpx>=0.26.0
+
+# Job Scheduling
+apscheduler>=3.10.0
